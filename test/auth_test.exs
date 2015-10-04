@@ -87,4 +87,13 @@ defmodule Blackbook.AuthTest do
     end
   end
 
+  test "validating a password reset with expired token fails", %{res: auth_res} do
+    change = Blackbook.User.changeset(auth_res, %{password_reset_token_expiration: nil })
+    Blackbook.Repo.update(change)
+    case Blackbook.Authentication.validate_password_reset(auth_res.password_reset_token) do
+      {:ok, token} ->  flunk "This should not work"
+      {:error, err} -> assert err
+    end
+  end
+
 end
