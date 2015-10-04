@@ -97,7 +97,7 @@ defmodule Blackbook.Authentication do
   ## Examples
 
   ```
-  {:ok, user} = Blackbook.Authentication.validate_password_reset 'test@test.com'
+  {:ok, user} = Blackbook.Authentication.get_user 'MY_USER_KEY'
   ```
   """
   def get_user(key) do
