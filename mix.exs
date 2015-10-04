@@ -4,7 +4,7 @@ defmodule Blackbook.Mixfile do
   def project do
     [app: :blackbook,
      description: "A membership backend for Elixir apps",
-     version: "0.0.1",
+     version: "0.2.0",
      elixir: "~> 1.0",
      package: package,
      build_embedded: Mix.env == :prod,
@@ -16,7 +16,7 @@ defmodule Blackbook.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [ mod: {Bigmachine, []},
+    [ mod: {Blackbook, []},
       applications: [:logger, :tzdata]]
   end
 
@@ -46,7 +46,7 @@ defmodule Blackbook.Mixfile do
     [
       maintainers: ["Rob Conery"],
       licenses: ["New BSD"],
-      links: %{"GitHub" => "https://github.com/bigmachine/blackbook"}
+      links: %{"GitHub" => "https://github.com/bigmachine-io/blackbook"}
     ]
   end
 end
