@@ -7,6 +7,8 @@ This is the machinery behind an authentication system and is still a bit of a wo
 
 This is the backing store.
 
+The [documentation is up at Hex](http://hexdocs.pm/blackbook)
+
 ## Installing
 
 First, drop Blackbook in your dependencies:
