@@ -1,5 +1,8 @@
 # Blackbook: A Membership System for Elixir
 
+[![Hex.pm Version](https://img.shields.io/hexpm/v/blackbook.svg)](https://hex.pm/packages/blackbook)
+
+
 This is the machinery behind an authentication system and is still a bit of a work in progress. You can still do the basics (register, authenticate) and have logs that go along with each. You can tweak statuses and also login using different services if you have OAuth plumbed into your app.
 
 This is the backing store.
@@ -105,5 +108,3 @@ The models are all available to you, as is the Repo so have a good time:
  - `Blackbook.Login` - the validation bits for locating and retrieving a user
  - `Blackbook.UserLog` - if you want to log something just pop a record in here
  - `Blackbook.Repo` - the Ecto repo used in the app
-
- 
