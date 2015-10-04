@@ -14,12 +14,14 @@ defmodule Blackbook.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :tzdata]]
+    [ mod: {Bigmachine, []},
+      applications: [:logger, :tzdata]]
   end
 
 
   defp deps(:dev) do
-    deps(:prod)
+    deps(:prod)++[{:ex_doc, "~> 0.7", only: :dev},
+      {:earmark, ">= 0.0.0"}]
   end
 
   defp deps(:test) do
