@@ -1,4 +1,4 @@
-defmodule BlackBook.Login do
+defmodule Blackbook.Login do
   use Ecto.Model
   schema "logins" do
     field :user_id, :integer

@@ -1,4 +1,4 @@
-defmodule BlackBook.Mixfile do
+defmodule Blackbook.Mixfile do
   use Mix.Project
 
   def project do

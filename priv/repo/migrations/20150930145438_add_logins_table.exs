@@ -1,4 +1,4 @@
-defmodule BlackBook.Repo.Migrations.AddLoginsTable do
+defmodule Blackbook.Repo.Migrations.AddLoginsTable do
   use Ecto.Migration
 
   def change do

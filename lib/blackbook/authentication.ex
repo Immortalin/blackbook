@@ -1,9 +1,9 @@
-defmodule BlackBook.Authentication do
+defmodule Blackbook.Authentication do
 
 
 
   def authenticate_by_token(token) do
-    login = BlackBook.Repo.get_by(BlackBook.Login, provider_key: "token", provider: "token", provider_token: token)
+    login = Blackbook.Repo.get_by(Blackbook.Login, provider_key: "token", provider: "token", provider_token: token)
     case login do
       nil -> {:error, "That token is invalid"}
       login -> pull_user_record({:ok, login})
@@ -30,10 +30,10 @@ defmodule BlackBook.Authentication do
   # ===================================================================================== Privvies
 
   defp reset_password({:ok, login}, new_password) do
-    case BlackBook.Util.hash_password new_password do
+    case Blackbook.Util.hash_password new_password do
       {:ok, hashed} ->
-        changeset = BlackBook.Login.changeset(login, %{provider_token: hashed})
-        BlackBook.Repo.update changeset
+        changeset = Blackbook.Login.changeset(login, %{provider_token: hashed})
+        Blackbook.Repo.update changeset
 
       {:error, err} -> {:error, err}
     end
@@ -41,7 +41,7 @@ defmodule BlackBook.Authentication do
 
   defp locate_login_by_email(email) do
     #get the user
-    case BlackBook.User.find_login(email) do
+    case Blackbook.User.find_login(email) do
       nil -> {:error, "This email doesn't exist in our system"}
       login -> {:ok, login}
     end
@@ -57,7 +57,7 @@ defmodule BlackBook.Authentication do
 
   defp pull_user_record({:error, err}), do: {:error, err}
   defp pull_user_record({:ok, login}) do
-    {:ok, BlackBook.Repo.get(BlackBook.User, login.user_id)}
+    {:ok, Blackbook.Repo.get(Blackbook.User, login.user_id)}
   end
 
   defp ensure_status_allows_login({:error, err}), do: {:error, err}
@@ -70,13 +70,13 @@ defmodule BlackBook.Authentication do
 
   defp log_it({:error, err}), do: {:error, err}
   defp log_it({:ok, user}) do
-    BlackBook.Repo.transaction fn ->
+    Blackbook.Repo.transaction fn ->
       #add a log entry
-      BlackBook.Repo.insert %BlackBook.UserLog{user_id: user.id, subject: "Authentication", entry: "User #{user.email} logged in"}
+      Blackbook.Repo.insert %Blackbook.UserLog{user_id: user.id, subject: "Authentication", entry: "User #{user.email} logged in"}
 
       #set the last login
-      changeset =BlackBook.User.changeset(user, %{last_login: Ecto.DateTime.local()})
-      {:ok, user} = BlackBook.Repo.update changeset
+      changeset =Blackbook.User.changeset(user, %{last_login: Ecto.DateTime.local()})
+      {:ok, user} = Blackbook.Repo.update changeset
       user
     end
   end

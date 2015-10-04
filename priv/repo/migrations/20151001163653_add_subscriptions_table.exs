@@ -1,4 +1,4 @@
-defmodule BlackBook.Repo.Migrations.AddSubscriptionsTable do
+defmodule Blackbook.Repo.Migrations.AddSubscriptionsTable do
   use Ecto.Migration
 
   def change do

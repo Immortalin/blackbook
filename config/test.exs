@@ -1,5 +1,5 @@
 use Mix.Config
-config :black_book, BlackBook.Repo,
+config :blackbook, Blackbook.Repo,
   adapter: Ecto.Adapters.Postgres,
   database: "bigmachine_test",
   username: "rob"

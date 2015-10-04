@@ -1,9 +1,9 @@
-defmodule BlackBook.Registration do
+defmodule Blackbook.Registration do
 
-  alias BlackBook.User
-  alias BlackBook.UserLog
-  alias BlackBook.Login
-  alias BlackBook.Repo
+  alias Blackbook.User
+  alias Blackbook.UserLog
+  alias Blackbook.Login
+  alias Blackbook.Repo
 
 
 
@@ -13,7 +13,7 @@ defmodule BlackBook.Registration do
       |> validate_passwords
       |> validate_email
       |> ensure_email_doesnt_exist
-      |> BlackBook.Util.hash_password
+      |> Blackbook.Util.hash_password
       |> add_to_database
 
   end

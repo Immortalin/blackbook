@@ -1,4 +1,4 @@
-defmodule BlackBook.Util do
+defmodule Blackbook.Util do
 
   def hash_password({:error, err}) do
     {:error, err}

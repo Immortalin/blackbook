@@ -1,4 +1,4 @@
-defmodule BlackBook.Repo.Migrations.AddRoles do
+defmodule Blackbook.Repo.Migrations.AddRoles do
   use Ecto.Migration
 
   def up do

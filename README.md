@@ -1,4 +1,4 @@
-# BlackBook: A Membership System for Elixir
+# Blackbook: A Membership System for Elixir
 
 The concept here is pretty simple: *a membership system that goes beyond registration and authentication*. User management is a Big Deal, and I dislike the Quick and Dirty systems out there so I made my own.
 

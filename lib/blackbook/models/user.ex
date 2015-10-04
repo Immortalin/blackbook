@@ -1,4 +1,4 @@
-defmodule BlackBook.User do
+defmodule Blackbook.User do
   use Ecto.Model
   import Ecto.Query
 
@@ -8,26 +8,27 @@ defmodule BlackBook.User do
     field :email
     field :user_key, :string, default: SecureRandom.urlsafe_base64()
     field :validation_token, :string, default: SecureRandom.urlsafe_base64()
+    field :password_reset_token, :string, default: SecureRandom.urlsafe_base64()
     field :status, :string,  default: "active"
     field :last_login, Ecto.DateTime
-    has_many :logs, BlackBook.UserLog
-    has_many :logins, BlackBook.Login
+    has_many :logs, Blackbook.UserLog
+    has_many :logins, Blackbook.Login
     timestamps
   end
 
   def find_by_email(email) do
-    BlackBook.Repo.get_by(BlackBook.User, email: email)
+    Blackbook.Repo.get_by(Blackbook.User, email: email)
   end
 
   def find_login(key, service \\ "local") do
-    BlackBook.Repo.get_by(BlackBook.Login, provider_key: key, provider: service)
+    Blackbook.Repo.get_by(Blackbook.Login, provider_key: key, provider: service)
   end
 
   def get_logs(user) do
     id = user.id
-    query = from l in BlackBook.UserLog,
+    query = from l in Blackbook.UserLog,
             where: l.user_id == ^id
-    BlackBook.Repo.all query
+    Blackbook.Repo.all query
   end
 
   @required_fields ~w(email status)
