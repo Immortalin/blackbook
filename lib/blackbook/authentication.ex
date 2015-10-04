@@ -1,6 +1,6 @@
 defmodule Blackbook.Authentication do
 
-
+  use Timex
 
   def authenticate_by_token(token) do
     login = Blackbook.Repo.get_by(Blackbook.Login, provider_key: "token", provider: "token", provider_token: token)
@@ -27,8 +27,37 @@ defmodule Blackbook.Authentication do
       |> reset_password(new_password)
   end
 
+  def get_reminder_token(email) do
+    Blackbook.User.find_by_email(email)
+      |> reset_reminder_token
+  end
+
+  def validate_password_reset(token) do
+    found = Blackbook.User.find_by_reset_token(token)
+    case found do
+      nil -> {:error, "That token is invalid"}
+      user -> {:ok, user}
+    end
+  end
+
   # ===================================================================================== Privvies
 
+
+
+  defp reset_reminder_token(nil), do: {:error, "This email does not exist"}
+  defp reset_reminder_token(user) do
+
+    new_token = SecureRandom.urlsafe_base64()
+    expiration = Date.now |> Date.add(Time.to_timestamp(1, :days))
+
+    changeset = Blackbook.User.changeset(user,%{password_reset_token: new_token, password_reset_token_expiration: expiration })
+
+    case Blackbook.Repo.update changeset do
+      {:ok, user} -> {:ok, user.password_reset_token}
+      {:error, err} -> {:error, err}
+    end
+  end
+  defp reset_password({:error, err}, new_password), do: {:error, "This login does not exist in our system."}
   defp reset_password({:ok, login}, new_password) do
     case Blackbook.Util.hash_password new_password do
       {:ok, hashed} ->
@@ -76,7 +105,10 @@ defmodule Blackbook.Authentication do
 
       #set the last login
       changeset =Blackbook.User.changeset(user, %{last_login: Ecto.DateTime.local()})
-      {:ok, user} = Blackbook.Repo.update changeset
+      case Blackbook.Repo.update changeset do
+        {:ok, user} -> user
+        {:error, err} -> {:error, err}
+      end
       user
     end
   end

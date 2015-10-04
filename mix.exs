@@ -14,7 +14,7 @@ defmodule Blackbook.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :tzdata]]
   end
 
 
@@ -32,7 +32,9 @@ defmodule Blackbook.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:ecto, "~> 1.0"},
       {:comeonin, "~> 1.2"},
-      {:secure_random, "~> 0.1"}
+      {:secure_random, "~> 0.1"},
+      {:timex, "~> 0.19.5"},
+      {:timex_ecto, "~> 0.5.0"}
     ]
   end
 

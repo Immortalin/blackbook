@@ -10,6 +10,7 @@ defmodule Blackbook.Repo.Migrations.AddUsersTable do
       add :user_key, :string, null: false
       add :validation_token, :string, null: false
       add :password_reset_token, :string, null: false
+      add :password_reset_token_expiration, :datetime
       add :status, :string, null: false
       add :last_login, :datetime
       timestamps

@@ -59,4 +59,32 @@ defmodule Blackbook.AuthTest do
     end
   end
 
+  test "changing password to an invalid password fails"  do
+    case Blackbook.Authentication.change_password("test@test.com", "password", "poop") do
+      {:ok, res} -> flunk "Nope this should not work"
+      {:error, err} -> assert err
+    end
+  end
+  test "changing password for a non-existent email fails"  do
+    case Blackbook.Authentication.change_password("asdasdasd@test.com", "password", "password") do
+      {:ok, res} -> flunk "Nope this should not work"
+      {:error, err} -> IO.inspect err; assert err
+    end
+  end
+
+  test "resetting reminder succeeds with valid email" do
+    case Blackbook.Authentication.get_reminder_token("test@test.com") do
+      {:ok, token} -> assert token
+      {:error, err} -> flunk err
+    end
+  end
+
+  test "validating a password reset with expiration in future succeeds" do
+    {:ok,token} = Blackbook.Authentication.get_reminder_token("test@test.com")
+    case Blackbook.Authentication.validate_password_reset(token) do
+      {:ok, token} -> assert token
+      {:error, err} -> flunk err
+    end
+  end
+
 end
