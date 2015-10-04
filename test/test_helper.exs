@@ -1,3 +1,3 @@
 ExUnit.start()
-
-System.cmd "mix ecto.migrate"
+BlackBook.start()
+#System.cmd "mix ecto.migrate"
