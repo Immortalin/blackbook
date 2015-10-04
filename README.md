@@ -9,3 +9,10 @@ Nothing that requires a degree in astro-botany, just sane data handling in a tra
 ## Work In Progress
 
 I'm still building this. So... yeah.
+
+## TODO
+
+ - Status changers
+ - Communications basics
+ - Email verification hooks
+ - Role functions
