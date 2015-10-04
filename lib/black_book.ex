@@ -1,0 +1,2 @@
+defmodule BlackBook do
+end
