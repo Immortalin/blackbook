@@ -96,4 +96,11 @@ defmodule Blackbook.AuthTest do
     end
   end
 
+  test "retrieving a user by valid key is successful", %{res: auth_res} do
+    case Blackbook.Authentication.get_user(auth_res.user_key) do
+      {:ok, user} ->  assert auth_res.id == user.id
+      {:error, err} -> flunk err
+    end
+  end
+
 end

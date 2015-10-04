@@ -23,7 +23,9 @@ defmodule Blackbook.User do
   def find_by_email(email) do
     Repo.get_by(Blackbook.User, email: email)
   end
-
+  def find_by_key(key) do
+    Repo.get_by(Blackbook.User, user_key: key)
+  end
   def find_by_reset_token(token) do
     {:ok, now} = Date.local()|> DateFormat.format("{ISO}")
 

@@ -6,7 +6,16 @@ defmodule Blackbook.Registration do
   alias Blackbook.Repo
 
 
+  @doc """
+  Registers a user, creating a log, auth-token login and a bcrypt hashed password.
 
+  ## Examples
+
+  ```
+  {:ok, user} = Blackbook.Regstration.submit_application [email: 'test@test.com', password: 'password', confirm: 'password']
+  ```
+
+  """
   def submit_application(creds) do
 
     validate_passwords({:ok, creds})

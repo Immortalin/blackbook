@@ -1,7 +1,20 @@
 defmodule Blackbook.Authentication do
+  @moduledoc """
+  Handles core authentication "stuff" - verifying who the user is,resetting information etc.
+  """
 
   use Timex
 
+  @doc """
+  Each user is granted a single token login at registration. This method uses that unique token to log them in.
+
+
+  ## Examples
+
+  ```
+  {:ok, user} = Blackbook.Authentication.authenticate_by_token 'BIGLONGTOKEN'
+  ```
+  """
   def authenticate_by_token(token) do
     login = Blackbook.Repo.get_by(Blackbook.Login, provider_key: "token", provider: "token", provider_token: token)
     case login do
@@ -12,6 +25,15 @@ defmodule Blackbook.Authentication do
     end
   end
 
+  @doc """
+  The core "login" method that takes an email and password.
+
+  ## Examples
+
+  ```
+  {:ok, user} = Blackbook.Authentication.authenticate_by_email_password 'test@test.com', 'password'
+  ```
+  """
   def authenticate_by_email_password(email, password) do
     locate_login_by_email(email)
       |> verify_password(password)
@@ -20,22 +42,68 @@ defmodule Blackbook.Authentication do
       |> log_it
   end
 
+  @doc """
+  Changes the user's password.
 
+  ## Examples
+
+  ```
+  {:ok, user} = Blackbook.Authentication.change_password 'test@test.com', 'password', 'new_password'
+  ```
+
+  """
   def change_password(email, old_password, new_password) do
     locate_login_by_email(email)
       |> verify_password(old_password)
       |> reset_password(new_password)
   end
 
+  @doc """
+  Returns a password reminder token the user can use to validate against and then reset their password. Expires in 24 hours.
+
+  ## Examples
+
+  ```
+  token = Blackbook.Authentication.get_reminder_token 'test@test.com'
+  ```
+
+  """
   def get_reminder_token(email) do
     Blackbook.User.find_by_email(email)
       |> reset_reminder_token
   end
 
+  @doc """
+  Validates a password reset token by 1) making sure it exists and 2) making sure it isn't expired. The user record is returned.
+
+  ## Examples
+
+  ```
+  {:ok, user} = Blackbook.Authentication.validate_password_reset 'test@test.com'
+  ```
+  """
   def validate_password_reset(token) do
     found = Blackbook.User.find_by_reset_token(token)
     case found do
       nil -> {:error, "That token is invalid"}
+      user -> {:ok, user}
+    end
+  end
+
+
+  @doc """
+  Each user has a random user key assigned to them at registration. This is a good candidate for use as a session key.
+
+  ## Examples
+
+  ```
+  {:ok, user} = Blackbook.Authentication.validate_password_reset 'test@test.com'
+  ```
+  """
+  def get_user(key) do
+    found = Blackbook.User.find_by_key(key)
+    case found do
+      nil -> {:error, "That user key is invalid"}
       user -> {:ok, user}
     end
   end
