@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Blackbook.Remove do
 
   def run(args) do
     IO.puts "Removing Blackbook membership DB"
-    System.cmd "mix", ["ecto.rollback", "--all"]
+    System.cmd "mix", ["ecto.rollback", "--all", "--repo", "Blackbook.Repo"]
     IO.puts "Done!"
   end
 

@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Blackbook.Install do
 
   def run(args) do
     IO.puts "Installing Blackbook membership DB"
-    System.cmd "mix", ["ecto.migrate"]
+    System.cmd "mix", ["ecto.migrate", "--repo", "Blackbook.Repo"]
     IO.puts "Done!"
   end
 
