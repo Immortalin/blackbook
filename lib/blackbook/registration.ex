@@ -19,7 +19,6 @@ defmodule Blackbook.Registration do
   def submit_application(creds) do
 
     validate_passwords({:ok, creds})
-      |> validate_passwords
       |> validate_email
       |> ensure_email_doesnt_exist
       |> Blackbook.Util.hash_password
