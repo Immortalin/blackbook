@@ -6,6 +6,7 @@ defmodule Blackbook.Repo.Migrations.AddUserLogsTable do
       add :subject, :string, null: false
       add :user_id, references(:users)
       add :entry, :string, null: false
+      add :ip, :string
       timestamps
     end
   end

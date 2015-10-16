@@ -7,6 +7,7 @@ defmodule Blackbook.Repo.Migrations.AddSubscriptionsTable do
       add :processor_customer_id, :string, null: false
       add :processor, :string, default: "stripe"
       add :processor_subscription_id, :string, null: false
+      add :plan_id, references(:plans)
       add :plan, :string
       add :discount, :decimal, length: 2, precision: 2
       add :price, :decimal, length: 2, precision: 2

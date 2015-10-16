@@ -4,7 +4,7 @@ defmodule Blackbook.Mixfile do
   def project do
     [app: :blackbook,
      description: "A membership backend for Elixir apps",
-     version: "0.3.0",
+     version: "0.4.0",
      elixir: "~> 1.0",
      package: package,
      build_embedded: Mix.env == :prod,

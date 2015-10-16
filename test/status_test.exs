@@ -6,25 +6,23 @@ defmodule Blackbook.StatusTest do
     Blackbook.Repo.delete_all(Blackbook.Login)
     Blackbook.Repo.delete_all(Blackbook.UserLog)
     Blackbook.Repo.delete_all(Blackbook.User)
-    case Blackbook.Registration.submit_application({"bob@test.com", "password", "password"}) do
-      {:ok, user} -> {:ok, [user: user]}
-      {:error, err} -> raise err
-    end
+    {:ok, user} = Blackbook.Commands.register_user(%{email: "joe@test.com", password: "password", password_confirmation: "password"})
+    {:ok, user: user}
   end
 
   test "suspending user succeeds", %{user: user} do
 
-    case User.suspend("bob@test.com", "This is a test") do
+    case Blackbook.Commands.suspend(user.email, "This is a test") do
       {:ok, user} -> assert user.status == "suspended"
       {:error, err} -> flunk err
     end
 
   end
 
-  test "suspending user succeeds", %{user: user} do
+  test "banning user succeeds", %{user: user} do
 
-    case User.suspend("bob@test.com", "This is a test") do
-      {:ok, user} -> assert user.status == "suspended"
+    case Blackbook.Commands.ban(user.email, "This is a test") do
+      {:ok, user} -> assert user.status == "banned"
       {:error, err} -> flunk err
     end
 
@@ -32,7 +30,7 @@ defmodule Blackbook.StatusTest do
 
   test "activating user succeeds", %{user: user} do
 
-    case User.activate("bob@test.com", "This is a test") do
+    case Blackbook.Commands.activate(user.email, "This is a test") do
       {:ok, user} -> assert user.status == "active"
       {:error, err} -> flunk err
     end

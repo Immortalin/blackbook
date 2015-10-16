@@ -1,7 +1,7 @@
 use Mix.Config
 config :blackbook, Blackbook.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "bigmachine_test",
+  database: "blackbook_dev",
   username: "rob"
 
 config :logger, level: :error
