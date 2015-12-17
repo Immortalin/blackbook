@@ -3,5 +3,6 @@ defmodule Mix.Tasks.Blackbook.Gen.Model do
 
   def run(args) do
     IO.puts "Hello World!"
+
   end
 end
